@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internal Audit Workflow</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Compliance dashboard</p>
+          <h1>Internal Audit Workflow</h1>
+        </div>
+        <button id="refreshButton" class="primary-btn">Refresh</button>
+      </header>
+
+      <section class="stats" id="summaryCards"></section>
+
+      <main class="content-grid">
+        <section class="panel reviews-panel">
+          <div class="panel-header">
+            <h2>Open Reviews</h2>
+          </div>
+          <div id="reviewsList" class="list-stack"></div>
+        </section>
+
+        <section class="panel findings-panel">
+          <div class="panel-header">
+            <h2>Findings</h2>
+          </div>
+          <div id="findingsList" class="list-stack"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
