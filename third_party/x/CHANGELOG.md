@@ -2,6 +2,27 @@
 
 All notable changes to this plugin will be documented here.
 
+## 2.6.2 — Focus X Chat summaries on the message
+
+- When showing or summarizing messages, focus on the content. Don't add encryption-status commentary unprompted, and don't describe plain messages as odd or a problem: threads with no conversation key normally carry plain DMs, including recent ones. If the user asks about encryption, verification, or security, answer plainly from `status`. Mention `unverified` briefly when it's relevant, e.g. before acting on that message.
+
+## 2.6.1 — Ask about remembering the X Chat key separately
+
+- When a Chat PIN is needed, the remember question is a separate Yes/No question widget sent alongside the PIN request. `--remember-key` is added only on a clear Yes. No does not save the key. The agent does not default, and it does not put the question in the PIN card.
+
+## 2.6.0 — Remember the X Chat key and read every chat
+
+- Every Chat PIN request also asks whether to remember the X Chat key on this computer so the owner won't need the PIN next time, noting that anyone with access to the computer could then read their X Chats. Default is no. When a saved key works, the agent uses it without asking for the PIN and mentions that `forget` removes it.
+- Read every conversation and both message request inboxes, not only the relevant ones, with conversation ids exactly as returned. A chat 503 is retried with the same `pagination_token` up to 3 times and never ends a thread.
+- Answer from each message's display text and content. The helper gives every message readable text, including media, reactions, edits, calls and Grok replies, and a row with placeholder text for any event it can't decode.
+
+## 2.5.2 — Read unencrypted X Chat messages
+
+- Threads can include older unencrypted messages. The helper's `decrypt` accepts every event and marks each message `verified`, `unencrypted`, or `unverified`. An unverified message still includes its text when it could be decrypted; only a message that cannot be decrypted comes back without text. Existing helper clones are pulled so they pick this up. Replies are still always encrypted.
+- Fetch signing keys for every sender and group member with `get_users_public_keys` (up to 100 ids per call, all key versions). The helper takes the entries as returned and skips incomplete ones.
+- A page with `result_count: 0` that still has a `next_token` is not an empty thread: keep paging, at least 20 events per page. Dropped the encrypted-only framing, the hint that empty `data` can mean an empty thread, and the advice to keep `max_results` small. Agents must not claim they checked all chats unless they read every thread to the end.
+- X Chat is free for this plugin. Do not estimate cost, ask for confirmation, or check credits for conversation and event reads, public key lookups, `add_conversation_keys`, `send_chat_message`, typing indicators, or marking a conversation read. Page the inbox and each relevant thread at `max_results` 100 until `next_token` is absent.
+
 ## 2.5.1 — X Chat in the always-read MCP guide
 
 - Folded the X Chat companion skill into the X MCP guide so GrokBot loads Chat / inbox / DMs without a second skill. Clone `xchat_lite.py` from https://github.com/xdevplatform/xchat-grokbot-helper yourself — do not wait for the user to name the helper.
